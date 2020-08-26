@@ -2,7 +2,7 @@
 
 A containerized, production-ready [prerender.io](https://github.com/prerender/prerender) for rendering Single Page Applications or any other websites. Exposes prerender on port `80`.
 
-Pull from Docker Hub: 
+Pull from Docker Hub (~135MB compressed): 
 
 ```
 docker pull zitros/prerender
