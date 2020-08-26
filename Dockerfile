@@ -1,20 +1,20 @@
 FROM node:10.15-alpine
+
+# From the parent container:
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
+ENV PORT_PRERENDER=80
 
-COPY ./package.json .
-COPY ./src/server.js ./src/server.js
+COPY . .
 
-# use edge repositories
-# RUN sed -i -e 's/v3\.8/edge/g' /etc/apk/repositories
-
-# install chromium and clear cache
-RUN apk add --update-cache chromium \
- && rm -rf /var/cache/apk/* /tmp/*
-
-# install npm packages
+# Install
+RUN apk add --update-cache chromium
 RUN npm install --no-package-lock
 
-EXPOSE 80
+# Cleanup
+RUN rm -rf /var/cache/apk/* /tmp/*
+RUN npm cache clean --force && rm -rf /usr/local/{lib/node{,/.npm,_modules},bin,share/man}/npm*
 
-CMD ["node", "src/server.js"]
+EXPOSE $PORT_PRERENDER
+
+ENTRYPOINT ["node", "src/server.js"]
