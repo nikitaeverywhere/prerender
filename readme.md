@@ -1,16 +1,26 @@
-A containerized, production-ready [prerender.io](https://github.com/prerender/prerender). Exposes prerender on port `80`.
+# Prerender
 
-**Usage example within Kubernetes**:
+A containerized, production-ready [prerender.io](https://github.com/prerender/prerender) for rendering Single Page Applications or any other websites. Exposes prerender on port `80`.
 
-+ GET `http://prerender/render?url=https%3A%2F%2Fwww.google.com`
+Pull from Docker Hub: 
+
+```
+docker pull zitros/prerender
+```
+
+## API Example
+
++ GET `/render?url=https%3A%2F%2Fwww.google.com`
    + response: `<plain html>`
-+ POST `http://prerender/render`
++ POST `/render`
    + --data `{ "url":"https://www.google.com", "javascript":"window.prerenderData = window.localStorage", "renderType":"har" }`
    + response: `{ "prerenderData": { "aaa": "[[],{\"q\":\"xxx\"}]", content: {"...": "..."} }`
 
 See the full prerender's API [here](https://github.com/prerender/prerender#prerendercom).
 
-**Kubernetes config example**:
+## Usage example within Kubernetes
+
+`kubectl apply -f services.yaml`, then f.e. `GET` `http://prerender/render?url=https%3A%2F%2Fwww.google.com`.
 
 ```
 ---
